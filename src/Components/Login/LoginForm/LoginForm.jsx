@@ -5,17 +5,13 @@ import axios from 'axios';
 const LoginForm = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassWord] = React.useState('');
+  console.log(password, username);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await axios.post('https://dogsapi.origamid.dev/json/jwt-auth/v1/token', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: {
-        username,
-        password,
-      },
+      username,
+      password,
     });
   };
   return (
