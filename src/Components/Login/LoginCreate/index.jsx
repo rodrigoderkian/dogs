@@ -1,1 +1,1 @@
-export { default as default } from './LoginCreate';
+export { default } from './LoginCreate';
