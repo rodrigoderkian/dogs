@@ -4,12 +4,11 @@ import axios from 'axios';
 import Input from '../../../Components/Forms/Input';
 import Button from '../../../Components/Forms/Button';
 import useForm from '../../../Hooks/useForm';
-import { TOKEN_POST, USER_GET } from '../../../api';
-import useLocalStorage from '../../../Hooks/useLocalStorage';
+
 import { UserContext } from '../../../Context/UserContext';
 
 const LoginForm = () => {
-  const { userLogin, data } = React.useContext(UserContext);
+  const { userLogin, error, loading } = React.useContext(UserContext);
   const username = useForm();
   const password = useForm();
 
@@ -26,7 +25,13 @@ const LoginForm = () => {
       <form action="" onSubmit={handleSubmit}>
         <Input {...username} label="Usuário" type="text" name="username" />
         <Input {...password} label="Senha" type="password" name="password" />
-        <Button>Entrar</Button>
+        {!!loading ? (
+          <Button disabled>Carregando...</Button>
+        ) : (
+          <Button>Entrar</Button>
+        )}
+
+        {!!error && <p>{error}</p>}
       </form>
       <Link to={'/login/criar'}>Cadastro</Link>
     </section>
