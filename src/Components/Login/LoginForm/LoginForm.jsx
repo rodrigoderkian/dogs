@@ -6,36 +6,19 @@ import Button from '../../../Components/Forms/Button';
 import useForm from '../../../Hooks/useForm';
 import { TOKEN_POST, USER_GET } from '../../../api';
 import useLocalStorage from '../../../Hooks/useLocalStorage';
+import { UserContext } from '../../../Context/UserContext';
 
 const LoginForm = () => {
+  const { userLogin, data } = React.useContext(UserContext);
   const username = useForm();
   const password = useForm();
-  const [token, setToken] = useLocalStorage('token', '');
-
-  const getUser = async (token) => {
-    const { url, options } = USER_GET(token);
-    const response = await fetch(url, options);
-    const json = await response.json();
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (username.validate() && password.validate()) {
-      const { url, options } = TOKEN_POST({
-        username: username.value,
-        password: password.value,
-      });
-      const response = await fetch(url, options);
-      const { token } = await response.json();
-      setToken(token);
+      userLogin(username.value, password.value);
     }
   };
-
-  React.useEffect(() => {
-    if (token.length) {
-      getUser(token);
-    }
-  }, []);
 
   return (
     <section>
