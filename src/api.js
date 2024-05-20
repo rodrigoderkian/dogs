@@ -21,7 +21,6 @@ export const TOKEN_VALIDATE_POST = (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(body),
     },
   };
 };
@@ -34,6 +33,19 @@ export const USER_GET = (token) => {
       headers: {
         Authorization: `Bearer ${token}`,
       },
+    },
+  };
+};
+
+export const USER_POST = (body) => {
+  return {
+    url: `${API_URL}/api/user`,
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
     },
   };
 };
